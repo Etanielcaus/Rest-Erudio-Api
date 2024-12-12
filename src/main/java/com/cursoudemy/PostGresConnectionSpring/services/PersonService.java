@@ -1,6 +1,8 @@
 package com.cursoudemy.PostGresConnectionSpring.services;
 
+import com.cursoudemy.PostGresConnectionSpring.data.PersonVO;
 import com.cursoudemy.PostGresConnectionSpring.excpetions.ResourceNotFoundException;
+import com.cursoudemy.PostGresConnectionSpring.mapper.DozerMapper;
 import com.cursoudemy.PostGresConnectionSpring.model.Person;
 import com.cursoudemy.PostGresConnectionSpring.repositories.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,28 +19,35 @@ public class PersonService {
     @Autowired
     PersonRepository personRepository;
 
-    public List<Person> findAll() {
+    public List<PersonVO> findAll() {
 
         logger.info("finding all");
 
-        return personRepository.findAll();
+        return DozerMapper.parseListObjects(personRepository.findAll(), PersonVO.class);
     }
 
 
-    public Person findById(Long id) {
+    public PersonVO findById(Long id) {
 
         logger.info("finding by id");
 
-        return personRepository.findById(id)
+        Person person = personRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No Record Found for this id"));
+
+        return DozerMapper.parseObject(person, PersonVO.class);
+
     }
 
-    public Person create(Person person) {
+    public PersonVO create(PersonVO person) {
         logger.info("Creating a person");
-        return personRepository.save(person);
+
+        Person parseObject = DozerMapper.parseObject(person, Person.class);
+        PersonVO personVO = DozerMapper.parseObject(personRepository.save(parseObject), PersonVO.class);
+
+        return personVO;
     }
 
-    public Person update(Person person) {
+    public PersonVO update(PersonVO person) {
         logger.info("Update new person");
         Person person1 = personRepository.findById(person.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("No Record found for this id"));
@@ -47,8 +56,10 @@ public class PersonService {
         person1.setFirstName(person.getFirstName());
         person1.setLastName(person.getLastName());
         person1.setGender(person.getGender());
-        return personRepository.save(person1);
 
+        PersonVO personVO = DozerMapper.parseObject(personRepository.save(person1), PersonVO.class);
+
+        return personVO;
     }
 
     public void delete(Long id) {
