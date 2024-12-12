@@ -4,6 +4,7 @@ import com.cursoudemy.PostGresConnectionSpring.model.Person;
 import com.cursoudemy.PostGresConnectionSpring.services.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,36 +19,35 @@ public class PersonController {
 
     private Logger logger = Logger.getLogger(PersonService.class.getName());
 
-    @RequestMapping(method = RequestMethod.GET,
+    @GetMapping(
             produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Person> findAll() {
         return personService.findAll();
     }
 
-    @RequestMapping(value = "/{id}",
-            method = RequestMethod.GET,
+    @GetMapping(value = "/{id}",
             produces = MediaType.APPLICATION_JSON_VALUE)
     public Person findById(@PathVariable(value = "id") Long id) {
         return personService.findById(id);
     }
 
-    @RequestMapping(method = RequestMethod.POST,
+    @PostMapping(
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public Person create(@RequestBody Person person) {
         return personService.create(person);
     }
 
-    @RequestMapping(method = RequestMethod.PUT,
+    @PutMapping(
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public Person update(@RequestBody Person person) {
         return personService.update(person);
     }
 
-    @RequestMapping(value = "/delete/{id}",
-            method = RequestMethod.DELETE)
-    public void delete(@PathVariable(value = "id") Long id) {
+    @DeleteMapping(value = "/delete/{id}")
+    public ResponseEntity<?> delete(@PathVariable(value = "id") Long id) {
         personService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }
