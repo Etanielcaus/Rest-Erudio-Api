@@ -2,7 +2,7 @@ package com.cursoudemy.PostGresConnectionSpring.services;
 
 import com.cursoudemy.PostGresConnectionSpring.data.PersonVO;
 import com.cursoudemy.PostGresConnectionSpring.excpetions.ResourceNotFoundException;
-import com.cursoudemy.PostGresConnectionSpring.mapper.DozerMapper;
+import com.cursoudemy.PostGresConnectionSpring.mapper.ModelMapperDTO;
 import com.cursoudemy.PostGresConnectionSpring.model.Person;
 import com.cursoudemy.PostGresConnectionSpring.repositories.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class PersonService {
 
         logger.info("finding all");
 
-        return DozerMapper.parseListObjects(personRepository.findAll(), PersonVO.class);
+        return ModelMapperDTO.parseListObjects(personRepository.findAll(), PersonVO.class);
     }
 
 
@@ -34,15 +34,15 @@ public class PersonService {
         Person person = personRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No Record Found for this id"));
 
-        return DozerMapper.parseObject(person, PersonVO.class);
+        return ModelMapperDTO.parseObject(person, PersonVO.class);
 
     }
 
     public PersonVO create(PersonVO person) {
         logger.info("Creating a person");
 
-        Person parseObject = DozerMapper.parseObject(person, Person.class);
-        PersonVO personVO = DozerMapper.parseObject(personRepository.save(parseObject), PersonVO.class);
+        Person parseObject = ModelMapperDTO.parseObject(person, Person.class);
+        PersonVO personVO = ModelMapperDTO.parseObject(personRepository.save(parseObject), PersonVO.class);
 
         return personVO;
     }
@@ -57,7 +57,7 @@ public class PersonService {
         person1.setLastName(person.getLastName());
         person1.setGender(person.getGender());
 
-        PersonVO personVO = DozerMapper.parseObject(personRepository.save(person1), PersonVO.class);
+        PersonVO personVO = ModelMapperDTO.parseObject(personRepository.save(person1), PersonVO.class);
 
         return personVO;
     }

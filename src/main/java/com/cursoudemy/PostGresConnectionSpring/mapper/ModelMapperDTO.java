@@ -5,7 +5,7 @@ import org.modelmapper.ModelMapper;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DozerMapper {
+public class ModelMapperDTO {
     private static ModelMapper mapper = new ModelMapper();
 
     public static <O, D> D parseObject(O origin, Class<D> destination) {
