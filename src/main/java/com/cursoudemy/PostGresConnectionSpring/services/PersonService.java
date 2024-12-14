@@ -3,6 +3,7 @@ package com.cursoudemy.PostGresConnectionSpring.services;
 import com.cursoudemy.PostGresConnectionSpring.data.v1.PersonVO;
 import com.cursoudemy.PostGresConnectionSpring.data.v2.PersonVOV2;
 import com.cursoudemy.PostGresConnectionSpring.excpetions.ResourceNotFoundException;
+import com.cursoudemy.PostGresConnectionSpring.mapper.ModelMapperCustom;
 import com.cursoudemy.PostGresConnectionSpring.mapper.ModelMapperDTO;
 import com.cursoudemy.PostGresConnectionSpring.model.Person;
 import com.cursoudemy.PostGresConnectionSpring.repositories.PersonRepository;
@@ -16,6 +17,9 @@ import java.util.logging.Logger;
 public class PersonService {
 
     private final Logger logger = Logger.getLogger(PersonService.class.getName());
+
+    @Autowired
+    ModelMapperCustom mapperCustom;
 
     @Autowired
     PersonRepository personRepository;
@@ -48,13 +52,13 @@ public class PersonService {
         return personVO;
     }
 
-    public PersonVOV2 create(PersonVOV2 person) {
-        logger.info("Creating a person");
+    public PersonVOV2 createv2(PersonVOV2 person) {
+        logger.info("Creating a person with V2");
 
-        Person parseObject = ModelMapperDTO.parseObject(person, Person.class);
-        PersonVOV2 personVO = ModelMapperDTO.parseObject(personRepository.save(parseObject), PersonVOV2.class);
+        Person personDomain = mapperCustom.convertVoToEntity(person);
+        PersonVOV2 personVO2 = mapperCustom.convertEntityToVO(personRepository.save(personDomain));
 
-        return personVO;
+        return personVO2;
     }
 
     public PersonVO update(PersonVO person) {
