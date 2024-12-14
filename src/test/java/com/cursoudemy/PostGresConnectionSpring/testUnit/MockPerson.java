@@ -1,6 +1,6 @@
 package com.cursoudemy.PostGresConnectionSpring.testUnit;
 
-import com.cursoudemy.PostGresConnectionSpring.data.PersonVO;
+import com.cursoudemy.PostGresConnectionSpring.data.v1.PersonVO;
 import com.cursoudemy.PostGresConnectionSpring.model.Person;
 
 import java.util.ArrayList;

@@ -1,10 +1,11 @@
-package com.cursoudemy.PostGresConnectionSpring.data;
+package com.cursoudemy.PostGresConnectionSpring.data.v2;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
 
-public class PersonVO implements Serializable {
+public class PersonVOV2 implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1;
@@ -14,16 +15,26 @@ public class PersonVO implements Serializable {
     private String lastName;
     private String address;
     private String gender;
+    private Date bithday;
 
-    public PersonVO() {
+    public PersonVOV2() {
     }
 
-    public PersonVO(Long id, String firstName, String lastName, String address, String gender) {
+    public PersonVOV2(Long id, String firstName, String lastName, String address, String gender, Date bithday) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
         this.gender = gender;
+        this.bithday = bithday;
+    }
+
+    public Date getBithday() {
+        return bithday;
+    }
+
+    public void setBithday(Date bithday) {
+        this.bithday = bithday;
     }
 
     public Long getId() {
@@ -66,15 +77,16 @@ public class PersonVO implements Serializable {
         this.gender = gender;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        PersonVO person = (PersonVO) o;
-        return Objects.equals(id, person.id) && Objects.equals(firstName, person.firstName) && Objects.equals(lastName, person.lastName) && Objects.equals(address, person.address) && Objects.equals(gender, person.gender);
+        PersonVOV2 that = (PersonVOV2) o;
+        return Objects.equals(id, that.id) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(address, that.address) && Objects.equals(gender, that.gender) && Objects.equals(bithday, that.bithday);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, address, gender);
+        return Objects.hash(id, firstName, lastName, address, gender, bithday);
     }
 }

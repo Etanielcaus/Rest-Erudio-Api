@@ -1,7 +1,7 @@
 package com.cursoudemy.PostGresConnectionSpring.controller;
 
-import com.cursoudemy.PostGresConnectionSpring.data.PersonVO;
-import com.cursoudemy.PostGresConnectionSpring.model.Person;
+import com.cursoudemy.PostGresConnectionSpring.data.v1.PersonVO;
+import com.cursoudemy.PostGresConnectionSpring.data.v2.PersonVOV2;
 import com.cursoudemy.PostGresConnectionSpring.services.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -37,6 +37,13 @@ public class PersonController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public PersonVO create(@RequestBody PersonVO person) {
         return personService.create(person);
+    }
+
+    @PostMapping(value = "/v2",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public PersonVOV2 createv2(@RequestBody PersonVOV2 person) {
+        return personService.createv2(person);
     }
 
     @PutMapping(

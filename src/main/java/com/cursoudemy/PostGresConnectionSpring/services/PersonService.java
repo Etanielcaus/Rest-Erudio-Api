@@ -1,6 +1,7 @@
 package com.cursoudemy.PostGresConnectionSpring.services;
 
-import com.cursoudemy.PostGresConnectionSpring.data.PersonVO;
+import com.cursoudemy.PostGresConnectionSpring.data.v1.PersonVO;
+import com.cursoudemy.PostGresConnectionSpring.data.v2.PersonVOV2;
 import com.cursoudemy.PostGresConnectionSpring.excpetions.ResourceNotFoundException;
 import com.cursoudemy.PostGresConnectionSpring.mapper.ModelMapperDTO;
 import com.cursoudemy.PostGresConnectionSpring.model.Person;
@@ -43,6 +44,15 @@ public class PersonService {
 
         Person parseObject = ModelMapperDTO.parseObject(person, Person.class);
         PersonVO personVO = ModelMapperDTO.parseObject(personRepository.save(parseObject), PersonVO.class);
+
+        return personVO;
+    }
+
+    public PersonVOV2 create(PersonVOV2 person) {
+        logger.info("Creating a person");
+
+        Person parseObject = ModelMapperDTO.parseObject(person, Person.class);
+        PersonVOV2 personVO = ModelMapperDTO.parseObject(personRepository.save(parseObject), PersonVOV2.class);
 
         return personVO;
     }

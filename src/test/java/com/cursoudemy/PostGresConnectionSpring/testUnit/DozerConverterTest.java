@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
 
-import com.cursoudemy.PostGresConnectionSpring.data.PersonVO;
+import com.cursoudemy.PostGresConnectionSpring.data.v1.PersonVO;
 import com.cursoudemy.PostGresConnectionSpring.mapper.ModelMapperDTO;
 import com.cursoudemy.PostGresConnectionSpring.model.Person;
 import org.junit.jupiter.api.BeforeEach;
