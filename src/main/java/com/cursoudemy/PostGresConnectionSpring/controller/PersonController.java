@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.print.attribute.standard.Media;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -23,6 +24,13 @@ public class PersonController {
     @GetMapping(
             produces = MediaType.APPLICATION_JSON_VALUE)
     public List<PersonVO> findAll() {
+        return personService.findAll();
+    }
+
+    @GetMapping(
+            value = "/v2/findAll",
+            produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    public List<PersonVO> findAllv2() {
         return personService.findAll();
     }
 
