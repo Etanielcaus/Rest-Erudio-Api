@@ -85,5 +85,13 @@ public class PersonService {
         personRepository.delete(person1);
     }
 
+    public PersonVO findByFirstName(String firstName) {
+        logger.info("Finding by first name");
+
+        Person person = personRepository.findByFirstName(firstName);
+
+        return ModelMapperDTO.parseObject(person, PersonVO.class);
+    }
+
 
 }

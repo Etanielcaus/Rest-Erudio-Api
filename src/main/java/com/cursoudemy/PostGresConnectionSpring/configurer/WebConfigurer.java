@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfigurer implements WebMvcConfigurer {
 
     @Override
-    public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
+    public void configureContentNegotiation(@SuppressWarnings("null") ContentNegotiationConfigurer configurer) {
 
 //        configurer.favorParameter(true)
 //                .parameterName("mediaType").ignoreAcceptHeader(true)

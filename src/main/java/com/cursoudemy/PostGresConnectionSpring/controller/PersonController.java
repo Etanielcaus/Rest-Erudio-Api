@@ -8,9 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.print.attribute.standard.Media;
 import java.util.List;
-import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/person")
@@ -18,8 +16,6 @@ public class PersonController {
 
     @Autowired
     private PersonService personService;
-
-    private Logger logger = Logger.getLogger(PersonService.class.getName());
 
     @GetMapping(
             produces = MediaType.APPLICATION_JSON_VALUE)
