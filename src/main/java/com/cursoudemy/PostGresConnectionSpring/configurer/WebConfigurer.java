@@ -10,7 +10,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.cursoudemy.PostGresConnectionSpring.converter.serialization.YamlJackson2HttoMessageConverter;
-import com.cursoudemy.PostGresConnectionSpring.converter.serialization.YamlJackson2HttpMessageConverter;
 
 @Configuration
 @EnableWebMvc
@@ -38,7 +37,7 @@ public class WebConfigurer implements WebMvcConfigurer {
     }
 
     @Override
-    public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
+    public void extendMessageConverters(@SuppressWarnings("null") List<HttpMessageConverter<?>> converters) {
         converters.add(new YamlJackson2HttoMessageConverter());
     }
 }

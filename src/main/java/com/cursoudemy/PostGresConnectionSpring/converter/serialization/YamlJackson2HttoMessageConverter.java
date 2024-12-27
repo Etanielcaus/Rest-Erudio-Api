@@ -1,6 +1,5 @@
 package com.cursoudemy.PostGresConnectionSpring.converter.serialization;
 
-import org.apache.tomcat.util.http.parser.MediaType;
 import org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
