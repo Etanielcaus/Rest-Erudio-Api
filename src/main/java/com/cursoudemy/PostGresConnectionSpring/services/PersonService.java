@@ -8,6 +8,7 @@ import com.cursoudemy.PostGresConnectionSpring.mapper.ModelMapperDTO;
 import com.cursoudemy.PostGresConnectionSpring.model.Person;
 import com.cursoudemy.PostGresConnectionSpring.repositories.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -85,12 +86,14 @@ public class PersonService {
         personRepository.delete(person1);
     }
 
-    public PersonVO findByFirstName(String firstName) {
+    public ResponseEntity<PersonVO> findByFirstName(String firstName) {
         logger.info("Finding by first name");
 
         Person person = personRepository.findByFirstName(firstName);
 
-        return ModelMapperDTO.parseObject(person, PersonVO.class);
+        PersonVO personVO = ModelMapperDTO.parseObject(person, PersonVO.class);
+
+        return ResponseEntity.ok(personVO);
     }
 
 

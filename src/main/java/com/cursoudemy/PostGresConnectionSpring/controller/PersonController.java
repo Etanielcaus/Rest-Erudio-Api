@@ -62,4 +62,10 @@ public class PersonController {
         personService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping(value = "/findByFirstName/{firstName}",
+    produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<PersonVO> findByFirstName(@PathVariable(value = "firstName") String firstName) {
+        return personService.findByFirstName(firstName);
+    }
 }
