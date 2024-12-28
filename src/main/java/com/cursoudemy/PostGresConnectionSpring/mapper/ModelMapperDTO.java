@@ -2,11 +2,21 @@ package com.cursoudemy.PostGresConnectionSpring.mapper;
 
 import org.modelmapper.ModelMapper;
 
+import com.cursoudemy.PostGresConnectionSpring.data.v2.PersonVOV2;
+import com.cursoudemy.PostGresConnectionSpring.model.Person;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class ModelMapperDTO {
     private static ModelMapper mapper = new ModelMapper();
+
+    static {
+        mapper.createTypeMap(Person.class, PersonVOV2.class)
+        .addMapping(Person::getId, PersonVOV2::setKey);
+        mapper.createTypeMap(PersonVOV2.class, Person.class)
+        .addMapping(PersonVOV2::getKey, Person::setId);
+    }
 
     public static <O, D> D parseObject(O origin, Class<D> destination) {
         return mapper.map(origin, destination);

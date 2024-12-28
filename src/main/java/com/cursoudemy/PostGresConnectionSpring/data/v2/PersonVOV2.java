@@ -2,47 +2,51 @@ package com.cursoudemy.PostGresConnectionSpring.data.v2;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.Objects;
 
-public class PersonVOV2 implements Serializable {
+import org.springframework.hateoas.RepresentationModel;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+
+public class PersonVOV2 extends RepresentationModel<PersonVOV2> implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1;
 
-    private Long id;
+    @JsonProperty(value = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long key;
+
+    @JsonProperty(value = "first_name")
     private String firstName;
+
+    @JsonProperty(value = "last_name")
     private String lastName;
     private String address;
     private String gender;
-    private Date bithday;
 
     public PersonVOV2() {
     }
 
-    public PersonVOV2(Long id, String firstName, String lastName, String address, String gender, Date bithday) {
-        this.id = id;
+    public PersonVOV2(Long key, String firstName, String lastName, String address, String gender) {
+
+        this.key = key;
+
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
         this.gender = gender;
-        this.bithday = bithday;
     }
 
-    public Date getBithday() {
-        return bithday;
+    public Long getKey() {
+        return key;
     }
 
-    public void setBithday(Date bithday) {
-        this.bithday = bithday;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public void setKey(Long key) {
+        this.key = key;
     }
 
     public String getFirstName() {
@@ -79,14 +83,14 @@ public class PersonVOV2 implements Serializable {
 
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(@SuppressWarnings("null") Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         PersonVOV2 that = (PersonVOV2) o;
-        return Objects.equals(id, that.id) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(address, that.address) && Objects.equals(gender, that.gender) && Objects.equals(bithday, that.bithday);
+        return Objects.equals(key, that.key) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(address, that.address) && Objects.equals(gender, that.gender);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, address, gender, bithday);
+        return Objects.hash(key, firstName, lastName, address, gender);
     }
 }

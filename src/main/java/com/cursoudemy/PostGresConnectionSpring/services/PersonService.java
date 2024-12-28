@@ -1,6 +1,5 @@
 package com.cursoudemy.PostGresConnectionSpring.services;
 
-import com.cursoudemy.PostGresConnectionSpring.data.v1.PersonVO;
 import com.cursoudemy.PostGresConnectionSpring.data.v2.PersonVOV2;
 import com.cursoudemy.PostGresConnectionSpring.excpetions.ResourceNotFoundException;
 import com.cursoudemy.PostGresConnectionSpring.mapper.ModelMapperCustom;
@@ -25,32 +24,32 @@ public class PersonService {
     @Autowired
     PersonRepository personRepository;
 
-    public List<PersonVO> findAll() {
+    public List<PersonVOV2> findAll() {
 
         logger.info("finding all");
 
-        return ModelMapperDTO.parseListObjects(personRepository.findAll(), PersonVO.class);
+        return ModelMapperDTO.parseListObjects(personRepository.findAll(), PersonVOV2.class);
     }
 
 
-    public PersonVO findById(Long id) {
+    public PersonVOV2 findById(Long key) {
 
         logger.info("finding by id");
 
-        Person person = personRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("No Record Found for this id"));
+        Person person = personRepository.findById(key)
+                .orElseThrow(() -> new ResourceNotFoundException("No Record Found for this key"));
 
-        return ModelMapperDTO.parseObject(person, PersonVO.class);
+        return ModelMapperDTO.parseObject(person, PersonVOV2.class);
 
     }
 
-    public PersonVO create(PersonVO person) {
+    public PersonVOV2 create(PersonVOV2 person) {
         logger.info("Creating a person");
 
         Person parseObject = ModelMapperDTO.parseObject(person, Person.class);
-        PersonVO personVO = ModelMapperDTO.parseObject(personRepository.save(parseObject), PersonVO.class);
+        PersonVOV2 personVOV2 = ModelMapperDTO.parseObject(personRepository.save(parseObject), PersonVOV2.class);
 
-        return personVO;
+        return personVOV2;
     }
 
     public PersonVOV2 createv2(PersonVOV2 person) {
@@ -62,39 +61,37 @@ public class PersonService {
         return personVO2;
     }
 
-    public PersonVO update(PersonVO person) {
+    public PersonVOV2 update(PersonVOV2 person) {
         logger.info("Update new person");
-        Person person1 = personRepository.findById(person.getId())
-                .orElseThrow(() -> new ResourceNotFoundException("No Record found for this id"));
+        Person person1 = personRepository.findById(person.getKey())
+                .orElseThrow(() -> new ResourceNotFoundException("No Record found for this key"));
 
         person1.setAddress(person.getAddress());
         person1.setFirstName(person.getFirstName());
         person1.setLastName(person.getLastName());
         person1.setGender(person.getGender());
 
-        PersonVO personVO = ModelMapperDTO.parseObject(personRepository.save(person1), PersonVO.class);
+        PersonVOV2 personVOV2 = ModelMapperDTO.parseObject(personRepository.save(person1), PersonVOV2.class);
 
-        return personVO;
+        return personVOV2;
     }
 
-    public void delete(Long id) {
+    public void delete(Long key) {
         logger.info("Delete Person");
 
-        Person person1 = personRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("No Record found for this id"));
-
+        Person person1 = personRepository.findById(key)
+                .orElseThrow(() -> new ResourceNotFoundException("No Record found for this key"));
         personRepository.delete(person1);
     }
 
-    public ResponseEntity<PersonVO> findByFirstName(String firstName) {
+    public ResponseEntity<PersonVOV2> findByFirstName(String firstName) {
         logger.info("Finding by first name");
 
         Person person = personRepository.findByFirstName(firstName);
 
-        PersonVO personVO = ModelMapperDTO.parseObject(person, PersonVO.class);
+        PersonVOV2 personVOV2 = ModelMapperDTO.parseObject(person, PersonVOV2.class);
 
-        return ResponseEntity.ok(personVO);
+        return ResponseEntity.ok(personVOV2);
     }
-
 
 }

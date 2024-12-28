@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
@@ -17,7 +18,6 @@ public class PersonVO implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1;
-
     private Long id;
 
     @JsonProperty(value = "first_name")
@@ -80,7 +80,7 @@ public class PersonVO implements Serializable {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(@SuppressWarnings("null") Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         PersonVO person = (PersonVO) o;
         return Objects.equals(id, person.id) && Objects.equals(firstName, person.firstName) && Objects.equals(lastName, person.lastName) && Objects.equals(address, person.address) && Objects.equals(gender, person.gender);
