@@ -1,7 +1,10 @@
 package com.cursoudemy.PostGresConnectionSpring.services;
 
+import com.cursoudemy.PostGresConnectionSpring.controller.PersonController;
 import com.cursoudemy.PostGresConnectionSpring.data.v2.PersonVOV2;
 import com.cursoudemy.PostGresConnectionSpring.excpetions.ResourceNotFoundException;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import com.cursoudemy.PostGresConnectionSpring.mapper.ModelMapperCustom;
 import com.cursoudemy.PostGresConnectionSpring.mapper.ModelMapperDTO;
 import com.cursoudemy.PostGresConnectionSpring.model.Person;
@@ -39,7 +42,10 @@ public class PersonService {
         Person person = personRepository.findById(key)
                 .orElseThrow(() -> new ResourceNotFoundException("No Record Found for this key"));
 
-        return ModelMapperDTO.parseObject(person, PersonVOV2.class);
+        PersonVOV2 personVOV2 = ModelMapperDTO.parseObject(person, PersonVOV2.class);
+
+        personVOV2.add(linkTo(methodOn(PersonController.class).findById(key)).withSelfRel());
+        return personVOV2;
 
     }
 
