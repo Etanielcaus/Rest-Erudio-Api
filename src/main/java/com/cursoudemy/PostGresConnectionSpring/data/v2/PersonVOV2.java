@@ -7,10 +7,12 @@ import java.util.Objects;
 import org.springframework.hateoas.RepresentationModel;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 
+@JsonPropertyOrder({"id", "first_name", "last_name", "address", "gender"})
 public class PersonVOV2 extends RepresentationModel<PersonVOV2> implements Serializable {
 
     @Serial

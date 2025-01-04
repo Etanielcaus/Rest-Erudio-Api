@@ -31,7 +31,11 @@ public class PersonService {
 
         logger.info("finding all");
 
-        return ModelMapperDTO.parseListObjects(personRepository.findAll(), PersonVOV2.class);
+        List<PersonVOV2> personVOV2 = ModelMapperDTO.parseListObjects(personRepository.findAll(), PersonVOV2.class);
+
+        personVOV2.stream().forEach(p -> p.add(linkTo(methodOn(PersonController.class).findById(p.getKey())).withSelfRel()));
+
+        return personVOV2;
     }
 
 
@@ -55,6 +59,7 @@ public class PersonService {
         Person parseObject = ModelMapperDTO.parseObject(person, Person.class);
         PersonVOV2 personVOV2 = ModelMapperDTO.parseObject(personRepository.save(parseObject), PersonVOV2.class);
 
+        personVOV2.add(linkTo(methodOn(PersonController.class).findById(personVOV2.getKey())).withSelfRel());
         return personVOV2;
     }
 
@@ -63,6 +68,8 @@ public class PersonService {
 
         Person personDomain = mapperCustom.convertVoToEntity(person);
         PersonVOV2 personVO2 = mapperCustom.convertEntityToVO(personRepository.save(personDomain));
+
+        personVO2.add(linkTo(methodOn(PersonController.class).findById(personVO2.getKey())).withSelfRel());
 
         return personVO2;
     }
@@ -78,6 +85,8 @@ public class PersonService {
         person1.setGender(person.getGender());
 
         PersonVOV2 personVOV2 = ModelMapperDTO.parseObject(personRepository.save(person1), PersonVOV2.class);
+
+        personVOV2.add(linkTo(methodOn(PersonController.class).findById(personVOV2.getKey())).withSelfRel());
 
         return personVOV2;
     }
@@ -96,6 +105,8 @@ public class PersonService {
         Person person = personRepository.findByFirstName(firstName);
 
         PersonVOV2 personVOV2 = ModelMapperDTO.parseObject(person, PersonVOV2.class);
+
+        personVOV2.add(linkTo(methodOn(PersonController.class).findById(personVOV2.getKey())).withSelfRel());
 
         return ResponseEntity.ok(personVOV2);
     }
