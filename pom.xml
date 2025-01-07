@@ -30,6 +30,7 @@
 		<java.version>17</java.version>
 		<modelmapper.version>3.0.0</modelmapper.version>
 		<jackson.version>2.15.2</jackson.version>
+		<mockito.version>5.15.2</mockito.version>
 	</properties>
 	<dependencies>
 
@@ -41,6 +42,13 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>${mockito.version}</version>
+			<scope>test</scope>
 		</dependency>
 
 		<dependency>
