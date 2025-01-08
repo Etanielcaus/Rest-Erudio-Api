@@ -1,6 +1,7 @@
 package com.cursoudemy.PostGresConnectionSpring.testUnit;
 
 import com.cursoudemy.PostGresConnectionSpring.data.v1.PersonVO;
+import com.cursoudemy.PostGresConnectionSpring.data.v2.PersonVOV2;
 import com.cursoudemy.PostGresConnectionSpring.model.Person;
 
 import java.util.ArrayList;
@@ -14,7 +15,11 @@ public class MockPerson {
     }
     
     public PersonVO mockVO() {
-        return mockVO(0);
+        return mockVO();
+    }
+
+    public PersonVOV2 mockVOV2() {
+        return mockVOV2(0);
     }
     
     public List<Person> mockEntityList() {
@@ -28,7 +33,15 @@ public class MockPerson {
     public List<PersonVO> mockVOList() {
         List<PersonVO> persons = new ArrayList<>();
         for (int i = 0; i < 14; i++) {
-            persons.add(mockVO(i));
+            persons.add(mockVO());
+        }
+        return persons;
+    }
+
+    public List<PersonVOV2> mockVOV2List() {
+        List<PersonVOV2> persons = new ArrayList<>();
+        for (int i = 0; i < 14; i++) {
+            persons.add(mockVOV2());
         }
         return persons;
     }
@@ -43,12 +56,12 @@ public class MockPerson {
         return person;
     }
 
-    public PersonVO mockVO(Integer number) {
-        PersonVO person = new PersonVO();
+    public PersonVOV2 mockVOV2(Integer number) {
+        PersonVOV2 person = new PersonVOV2();
         person.setAddress("Addres Test" + number);
         person.setFirstName("First Name Test" + number);
         person.setGender(((number % 2)==0) ? "Male" : "Female");
-        person.setId(number.longValue());
+        person.setKey(number.longValue());
         person.setLastName("Last Name Test" + number);
         return person;
     }

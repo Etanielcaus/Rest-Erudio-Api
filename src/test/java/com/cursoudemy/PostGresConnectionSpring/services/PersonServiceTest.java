@@ -68,11 +68,31 @@ class PersonServiceTest {
 
     @Test
     void create() {
+        Person person = input.mockEntity();
+
+        Person persisted = person;
+        persisted.setId(1L);
+
+        PersonVOV2 vo = input.mockVOV2();
+
+        vo.setKey(1L); 
+        Mockito.when(repository.save(person)).thenReturn(persisted);
+
+        var result = service.create(vo);
+
+        assertNotNull(result);
+        assertNotNull(result.getKey());
+        assertNotNull(result.getLinks());
+        assertEquals(1L, result.getKey());
+        assertEquals("First Name Test0", result.getFirstName());
+        assertEquals("Last Name Test0", result.getLastName());
+        assertEquals("Addres Test0", result.getAddress());
+        assertEquals("Male", result.getGender());
+
     }
 
     @Test
-    void createv2() {
-    }
+    void createv2() {}
 
     @Test
     void update() {
