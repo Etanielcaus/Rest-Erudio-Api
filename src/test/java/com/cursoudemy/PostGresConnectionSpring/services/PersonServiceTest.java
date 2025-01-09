@@ -92,17 +92,52 @@ class PersonServiceTest {
     }
 
     @Test
-    void createv2() {}
-
-    @Test
     void update() {
+        Person person = input.mockEntity();
+        person.setId(1L);
+
+        Person persisted = person;
+        persisted.setId(1L);
+
+        PersonVOV2 vo = input.mockVOV2();
+        vo.setKey(1L);
+
+        Mockito.when(repository.findById(1L)).thenReturn(Optional.of(person));
+        Mockito.when(repository.save(person)).thenReturn(persisted);
+
+        var result = service.update(vo);
+
+        assertNotNull(result);
+        assertNotNull(result.getKey());
+        assertNotNull(result.getLinks());
     }
 
     @Test
     void delete() {
+        Person person = input.mockEntity();
+        person.setId(1L);
+
+        Mockito.when(repository.findById(1L)).thenReturn(Optional.of(person));
+        Mockito.doNothing().when(repository).delete(person);
+
+        service.delete(1L);
     }
 
+    @SuppressWarnings("null")
     @Test
     void findByFirstName() {
+        Person person = input.mockEntity();
+        person.setId(1L);
+
+        Mockito.when(repository.findByFirstName(person.getFirstName())).thenReturn(person);
+
+        var result = service.findByFirstName(person.getFirstName());
+
+        assertNotNull(result);
+        assertEquals(1L, result.getBody().getKey());
+        assertEquals("First Name Test0", result.getBody().getFirstName());
+        assertEquals("Last Name Test0", result.getBody().getLastName());
+        assertEquals("Addres Test0", result.getBody().getAddress());
+        assertEquals("Male", result.getBody().getGender());
     }
 }
