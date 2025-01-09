@@ -1,6 +1,12 @@
 package com.cursoudemy.PostGresConnectionSpring.services;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import java.util.Optional;
+
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,10 +20,6 @@ import com.cursoudemy.PostGresConnectionSpring.data.v2.PersonVOV2;
 import com.cursoudemy.PostGresConnectionSpring.model.Person;
 import com.cursoudemy.PostGresConnectionSpring.repositories.PersonRepository;
 import com.cursoudemy.PostGresConnectionSpring.testUnit.MockPerson;
-
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.util.Optional;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @ExtendWith(MockitoExtension.class)
 class PersonServiceTest {
@@ -48,6 +50,7 @@ class PersonServiceTest {
     }
 
     @Test
+    @DisplayName("Find a person by id with success")
     void findById() {
         Person person = input.mockEntity();
         person.setId(1L);
@@ -67,6 +70,7 @@ class PersonServiceTest {
     }
 
     @Test
+    @DisplayName("Create a person with success")
     void create() {
         Person person = input.mockEntity();
 
@@ -92,6 +96,7 @@ class PersonServiceTest {
     }
 
     @Test
+    @DisplayName("Update a person with success")
     void update() {
         Person person = input.mockEntity();
         person.setId(1L);
@@ -113,6 +118,7 @@ class PersonServiceTest {
     }
 
     @Test
+    @DisplayName("Delete a person with success")
     void delete() {
         Person person = input.mockEntity();
         person.setId(1L);
@@ -125,6 +131,7 @@ class PersonServiceTest {
 
     @SuppressWarnings("null")
     @Test
+    @DisplayName("Find a person by first name with success")
     void findByFirstName() {
         Person person = input.mockEntity();
         person.setId(1L);
@@ -134,6 +141,7 @@ class PersonServiceTest {
         var result = service.findByFirstName(person.getFirstName());
 
         assertNotNull(result);
+        assertNotNull(result.getBody());
         assertEquals(1L, result.getBody().getKey());
         assertEquals("First Name Test0", result.getBody().getFirstName());
         assertEquals("Last Name Test0", result.getBody().getLastName());
